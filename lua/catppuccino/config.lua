@@ -40,6 +40,10 @@ config.options = {
 		barbar = false,
 		bufferline = false,
 		markdown = false,
+		typescript = true,
+		nerdtree = true,
+		fugitive = true,
+		winbar = true,
 	},
 }
 

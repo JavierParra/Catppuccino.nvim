@@ -2,7 +2,7 @@ local M = {}
 
 function M.get(cpt)
 	return {
-		IndentBlanklineChar = { fg = cpt.gray },
+		IndentBlanklineChar = { fg = cpt.red },
 	}
 end
 

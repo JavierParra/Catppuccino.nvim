@@ -18,8 +18,8 @@ local function get_base()
 
 	return {
 		Comment = { fg = cpt.comment, style = cpc.styles.comments }, -- any comment
-		ColorColumn = { bg = cpt.bg_visual }, -- used for the columns set with 'colorcolumn'
-		Conceal = { fg = cpt.black }, -- placeholder characters substituted for concealed text (see 'conceallevel')
+		ColorColumn = { bg = cpt.bg_highlight }, -- used for the columns set with 'colorcolumn'
+		Conceal = { fg = cpt.gray }, -- placeholder characters substituted for concealed text (see 'conceallevel')
 		Cursor = { fg = cpt.bg, bg = cpt.fg }, -- character under the cursor
 		lCursor = { fg = cpt.bg, bg = cpt.fg }, -- the character under the cursor when |language-mapping| is used (see 'guicursor')
 		CursorIM = { fg = cpt.bg, bg = cpt.fg }, -- like Cursor, but used when in IME mode |CursorIM|
@@ -29,32 +29,32 @@ local function get_base()
 		EndOfBuffer = { fg = cpt.bg }, -- filler lines (~) after the end of the buffer.  By default, this is highlighted like |hl-NonText|.
 		ErrorMsg = { fg = cpt.error }, -- error messages on the command line
 		VertSplit = { fg = cpt.border }, -- the column separating vertically split windows
-		Folded = { fg = cpt.blue, bg = cpt.fg_gutter }, -- line used for closed folds
+		Folded = { fg = cpt.gray, bg = cpt.none }, -- line used for closed folds
 		FoldColumn = { bg = cpt.bg, fg = cpt.comment }, -- 'foldcolumn'
 		SignColumn = { bg = cpc.transparency and cpt.none or cpt.bg, fg = cpt.fg_gutter }, -- column where |signs| are displayed
 		SignColumnSB = { bg = cpt.bg_sidebar, fg = cpt.fg_gutter }, -- column where |signs| are displayed
 		Substitute = { bg = cpt.red, fg = cpt.black }, -- |:substitute| replacement text highlighting
-		LineNr = { fg = cpt.fg_gutter }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is secpt.
-		CursorLineNr = { fg = cpt.fg_alt }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line. highlights the number in numberline.
-		MatchParen = { fg = cpt.orange, style = "bold" }, -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
+		LineNr = { fg = util.darken(cpt.gray, 0.4) }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is secpt.
+		CursorLineNr = { fg = cpt.orange }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line. highlights the number in numberline.
+		MatchParen = { fg = cpt.red, style = "bold" }, -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
 		ModeMsg = { fg = cpt.fg_alt, style = "bold" }, -- 'showmode' message (e.g., "-- INSERT -- ")
 		MsgArea = { fg = cpt.white_br }, -- Area for messages and cmdline
 		MsgSeparator = {}, -- Separator for scrolled messages, `msgsep` flag of 'display'
 		MoreMsg = { fg = cpt.blue }, -- |more-prompt|
 		NonText = { fg = cpt.comment }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
 		Normal = { fg = cpt.fg, bg = cpc.transparency and cpt.none or cpt.bg }, -- normal text
-		NormalNC = { fg = cpt.fg, bg = cpc.transparency and cpt.none or cpt.bg }, -- normal text in non-current windows
+		NormalNC = { fg = cpt.fg, bg = cpc.transparency and cpt.none or cpt.bg_inactive or cpt.bg }, -- normal text in non-current windows
 		NormalSB = { fg = cpt.fg_sidebar, bg = cpt.bg_sidebar }, -- normal text in non-current windows
 		NormalFloat = { fg = cpt.fg, bg = cpt.bg_float }, -- Normal text in floating windows.
 		FloatBorder = { fg = cpt.border_highlight },
-		Pmenu = { bg = cpt.bg_popup, fg = cpt.fg }, -- Popup menu: normal item.
-		PmenuSel = { fg = cpt.cyan, bg = util.darken(cpt.fg_gutter, 0.8) }, -- Popup menu: selected item.
+		Pmenu = { bg = cpt.bg_popup, fg = cpt.cyan }, -- Popup menu: normal item.
+		PmenuSel = { fg = cpt.yellow, bg = util.darken(cpt.fg_gutter, 0.8) }, -- Popup menu: selected item.
 		PmenuSbar = { bg = util.lighten(cpt.bg_popup, 0.95) }, -- Popup menu: scrollbar.
 		PmenuThumb = { bg = cpt.fg_gutter }, -- Popup menu: Thumb of the scrollbar.
 		Question = { fg = cpt.blue }, -- |hit-enter| prompt and yes/no questions
 		QuickFixLine = { bg = cpt.bg_visual, style = "bold" }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
-		Search = { bg = cpt.bg_search, fg = cpt.fg }, -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand oucpt.
-		IncSearch = { bg = cpt.cyan, fg = cpt.black }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
+		Search = { bg = cpt.bg_search, fg = cpt.black, style = 'bold' }, -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand oucpt.
+		IncSearch = { bg = cpt.cyan, fg = cpt.black, style = 'bold'  }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
 		SpecialKey = { fg = cpt.black }, -- Unprintable characters: text displayed differently from what it really is.  But not 'listchars' whitespace. |hl-Whitespace|
 		SpellBad = { sp = cpt.error, style = "undercurl" }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
 		SpellCap = { sp = cpt.warning, style = "undercurl" }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
@@ -71,6 +71,7 @@ local function get_base()
 		WarningMsg = { fg = cpt.warning }, -- warning messages
 		Whitespace = { fg = cpt.fg_gutter }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
 		WildMenu = { bg = cpt.bg_visual }, -- current match in 'wildmenu' completion
+		WinSeparator = { bg = cpt.none, fg = cpt.true_black },
 		-- These groups are not listed as default vim groups,
 		-- but they are defacto standard group names for syntax highlighting.
 		-- commented out groups should chain up to their "preferred" group by
@@ -80,19 +81,19 @@ local function get_base()
 		-- code itself
 
 		Constant = { fg = cpt.orange }, -- (preferred) any constant
-		String = { fg = cpt.green, style = cpc.styles.strings }, -- a string constant: "this is a string"
-		Character = { fg = cpt.green }, --  a character constant: 'c', '\n'
-		Number = { fg = cpt.orange_br }, --   a number constant: 234, 0xff
-		Float = { fg = cpt.orange_br }, --    a floating point constant: 2.3e10
-		Boolean = { fg = cpt.orange_br }, --  a boolean constant: TRUE, false
+		String = { fg = cpt.yellow, style = cpc.styles.strings }, -- a string constant: "this is a string"
+		Character = { fg = cpt.orange }, --  a character constant: 'c', '\n'
+		Number = { fg = cpt.magenta }, --   a number constant: 234, 0xff
+		Float = { fg = cpt.magenta }, --    a floating point constant: 2.3e10
+		Boolean = { fg = cpt.magenta }, --  a boolean constant: TRUE, false
 		Identifier = { fg = cpt.cyan, style = cpc.styles.variables }, -- (preferred) any variable name
-		Function = { fg = cpt.blue, style = cpc.styles.functions }, -- function name (also: methods for classes)
-		Statement = { fg = cpt.magenta_br }, -- (preferred) any statement
+		Function = { fg = cpt.green, style = cpc.styles.functions }, -- function name (also: methods for classes)
+		Statement = { fg = cpt.pink }, -- (preferred) any statement
 		Conditional = { fg = cpt.red }, --  if, then, else, endif, switch, etcpt.
 		Repeat = { fg = cpt.red }, --   for, do, while, etcpt.
-		Label = { fg = cpt.magenta_br }, --    case, default, etcpt.
+		Label = { fg = cpt.pink }, --    case, default, etcpt.
 		Operator = { fg = cpt.fg_alt }, -- "sizeof", "+", "*", etcpt.
-		Keyword = { fg = cpt.magenta, style = cpc.styles.keywords }, --  any other keyword
+		Keyword = { fg = cpt.pink, style = cpc.styles.keywords }, --  any other keyword
 		-- Exception     = { }, --  try, catch, throw
 
 		PreProc = { fg = cpt.pink }, -- (preferred) generic Preprocessor
@@ -105,7 +106,7 @@ local function get_base()
 		StorageClass = { fg = cpt.yellow }, -- static, register, volatile, etcpt.
 		Structure = { fg = cpt.yellow }, --  struct, union, enum, etcpt.
 		Typedef = { fg = cpt.yellow }, --  A typedef
-		Special = { fg = cpt.blue }, -- (preferred) any special symbol
+		Special = { fg = cpt.cyan }, -- (preferred) any special symbol
 		-- SpecialChar   = { }, --  special character in a constant
 		-- Tag           = { }, --    you can use CTRL-] on this
 		-- Delimiter     = { }, --  character that needs attention
@@ -138,9 +139,9 @@ local function get_base()
 		illuminatedWord = { bg = cpt.fg_gutter },
 		illuminatedCurWord = { bg = cpt.fg_gutter },
 		-- diff
-		diffAdded = { fg = cpt.git.add },
-		diffRemoved = { fg = cpt.git.delete },
-		diffChanged = { fg = cpt.git.change },
+		diffAdded = { fg = cpt.green },
+		diffRemoved = { fg = cpt.pink  },
+		diffChanged = { fg = cpt.orange  },
 		diffOldFile = { fg = cpt.yellow },
 		diffNewFile = { fg = cpt.orange },
 		diffFile = { fg = cpt.blue },
