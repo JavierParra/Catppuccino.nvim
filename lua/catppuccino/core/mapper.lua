@@ -34,7 +34,7 @@ local function get_base()
 		SignColumn = { bg = cpc.transparency and cpt.none or cpt.bg, fg = cpt.fg_gutter }, -- column where |signs| are displayed
 		SignColumnSB = { bg = cpt.bg_sidebar, fg = cpt.fg_gutter }, -- column where |signs| are displayed
 		Substitute = { bg = cpt.red, fg = cpt.black }, -- |:substitute| replacement text highlighting
-		LineNr = { fg = util.darken(cpt.gray, 0.4) }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is secpt.
+		LineNr = { fg = util.darken(cpt.gray, 0.7) }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is secpt.
 		CursorLineNr = { fg = cpt.orange }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line. highlights the number in numberline.
 		MatchParen = { fg = cpt.red, style = "bold" }, -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
 		ModeMsg = { fg = cpt.fg_alt, style = "bold" }, -- 'showmode' message (e.g., "-- INSERT -- ")
