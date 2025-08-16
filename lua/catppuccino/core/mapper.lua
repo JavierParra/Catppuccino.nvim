@@ -19,7 +19,7 @@ local function get_base()
 	return {
 		Comment = { fg = cpt.comment, style = cpc.styles.comments }, -- any comment
 		ColorColumn = { bg = cpt.bg_highlight }, -- used for the columns set with 'colorcolumn'
-		Conceal = { fg = cpt.gray }, -- placeholder characters substituted for concealed text (see 'conceallevel')
+		Conceal = { fg = cpt.bg }, -- placeholder characters substituted for concealed text (see 'conceallevel')
 		Cursor = { fg = cpt.bg, bg = cpt.fg }, -- character under the cursor
 		lCursor = { fg = cpt.bg, bg = cpt.fg }, -- the character under the cursor when |language-mapping| is used (see 'guicursor')
 		CursorIM = { fg = cpt.bg, bg = cpt.fg }, -- like Cursor, but used when in IME mode |CursorIM|
